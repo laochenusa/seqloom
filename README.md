@@ -1,5 +1,7 @@
 # Seqloom 1.0 alpha
 
+**[Public Testing](PUBLIC_TESTING.md)** — Build and test Seqloom from source on Windows x64. No prebuilt installer or third-party runtime binaries are distributed.
+
 Local, deterministic video production from validated ZIP packages. The interface and package requirements default to English; project titles, media names and captions preserve their original language.
 
 ## Scope
