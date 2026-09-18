@@ -8,8 +8,8 @@ import yauzl from 'yauzl';
 import {assert, PackageError} from './schema.mjs';
 
 export function safeRelative(name) {
-  assert(typeof name === 'string' && name.length > 0 && name.length < 220 && !/[\\:\x00-\x1f<>"|?*]/.test(name) && !name.startsWith('/'), 'UNSAFE_PATH', `不支持的包内路径：${name}`);
-  assert(name.split('/').every(p => p && p !== '.' && p !== '..' && !/[. ]$/.test(p) && !/^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(p)), 'UNSAFE_PATH', `不安全的包内路径：${name}`);
+  assert(typeof name === 'string' && name.length > 0 && name.length < 220 && !/[\\:\x00-\x1f<>"|?*]/.test(name) && !name.startsWith('/'), 'UNSAFE_PATH', `Unsupported package path: ${name}`);
+  assert(name.split('/').every(p => p && p !== '.' && p !== '..' && !/[. ]$/.test(p) && !/^(con|prn|aux|nul|com[1-9]|lpt[1-9])(?:\.|$)/i.test(p)), 'UNSAFE_PATH', `Unsafe package path: ${name}`);
   return name;
 }
 export async function sha256(file) {
@@ -30,18 +30,18 @@ export function run(exe, args, {signal, onLine, limit = 8_000_000} = {}) {
     child.on('error', e => finish(e));
     child.on('close', code => {
       if (signal?.aborted) return finish(new PackageError('CANCELLED', 'Task cancelled.'));
-      if (code !== 0) return finish(new PackageError('MEDIA_PROCESS_FAILED', `媒体处理失败：${stderr.slice(-1800) || `退出代码 ${code}`}`));
+      if (code !== 0) return finish(new PackageError('MEDIA_PROCESS_FAILED', `Media processing failed: ${stderr.slice(-1800) || `Exit code ${code}`}`));
       finish(null, {stdout, stderr});
     });
   });
 }
 export async function extractZip(zipPath, dest, signal) {
   const stat = await fs.stat(zipPath);
-  assert(stat.size < 2 * 1024 ** 3, 'ZIP_TOO_LARGE', '第一版素材包压缩体积上限为 2 GB');
+  assert(stat.size < 2 * 1024 ** 3, 'ZIP_TOO_LARGE', 'The compressed package must be smaller than 2 GB.');
   await fs.mkdir(dest, {recursive: true});
   return new Promise((resolve, reject) => {
     yauzl.open(zipPath, {lazyEntries: true, validateEntrySizes: true, strictFileNames: true}, (err, zip) => {
-      if (err) return reject(new PackageError('ZIP_INVALID', `无法读取 ZIP：${err.message}`));
+      if (err) return reject(new PackageError('ZIP_INVALID', `Cannot read ZIP: ${err.message}`));
       const files = [], seen = new Set(); let total = 0, done = false, count = 0;
       const abort = () => fail(new PackageError('CANCELLED', 'Task cancelled.'));
       const fail = e => {if (done) return; done = true; zip.close(); signal?.removeEventListener('abort', abort); reject(e);};
@@ -52,12 +52,12 @@ export async function extractZip(zipPath, dest, signal) {
           if (signal?.aborted) throw new PackageError('CANCELLED', 'Task cancelled.');
           const isDir = entry.fileName.endsWith('/');
           const name = safeRelative(isDir ? entry.fileName.slice(0, -1) : entry.fileName);
-          assert(!seen.has(name.toLowerCase()), 'ZIP_DUPLICATE', `包内文件重名：${name}`); seen.add(name.toLowerCase());
-          assert(++count <= 10000, 'ZIP_LIMIT', '包内文件数量过多');
-          assert(((entry.externalFileAttributes >>> 16) & 0xf000) !== 0xa000, 'ZIP_SYMLINK', '素材包不允许符号链接');
-          assert(!(entry.generalPurposeBitFlag & 1), 'ZIP_ENCRYPTED', '请提供未加密 ZIP');
+          assert(!seen.has(name.toLowerCase()), 'ZIP_DUPLICATE', `Duplicate package entry: ${name}`); seen.add(name.toLowerCase());
+          assert(++count <= 10000, 'ZIP_LIMIT', 'Too many package entries.');
+          assert(((entry.externalFileAttributes >>> 16) & 0xf000) !== 0xa000, 'ZIP_SYMLINK', 'Symbolic links are not allowed in packages.');
+          assert(!(entry.generalPurposeBitFlag & 1), 'ZIP_ENCRYPTED', 'Supply an unencrypted ZIP.');
           total += entry.uncompressedSize;
-          assert(total <= 8 * 1024 ** 3 && entry.uncompressedSize <= 2 * 1024 ** 3, 'ZIP_LIMIT', '解压体积超过第一版限制');
+          assert(total <= 8 * 1024 ** 3 && entry.uncompressedSize <= 2 * 1024 ** 3, 'ZIP_LIMIT', 'The extracted size exceeds the v1 limit.');
           const file = path.join(dest, name);
           if (isDir) await fs.mkdir(file, {recursive: true});
           else {
@@ -74,20 +74,20 @@ export async function extractZip(zipPath, dest, signal) {
   });
 }
 export async function verifyChecksums(root, files) {
-  assert(files.includes('checksums.sha256'), 'CHECKSUM_MISSING', '缺少 checksums.sha256');
+  assert(files.includes('checksums.sha256'), 'CHECKSUM_MISSING', 'Missing checksums.sha256.');
   const declared = new Set();
   for (const line of (await fs.readFile(path.join(root, 'checksums.sha256'), 'utf8')).replace(/^\uFEFF/, '').split(/\r?\n/).filter(Boolean)) {
     const match = /^([a-fA-F0-9]{64})  (.+)$/.exec(line);
-    assert(match, 'CHECKSUM_FORMAT', '校验清单应为 SHA256、两个空格、相对路径');
+    assert(match, 'CHECKSUM_FORMAT', 'Each checksum line must contain SHA256, two spaces, and a relative path.');
     const name = safeRelative(match[2]);
-    assert(name !== 'checksums.sha256' && files.includes(name) && !declared.has(name), 'CHECKSUM_FORMAT', `校验清单引用异常：${name}`);
+    assert(name !== 'checksums.sha256' && files.includes(name) && !declared.has(name), 'CHECKSUM_FORMAT', `Invalid checksum reference: ${name}`);
     declared.add(name);
-    assert(await sha256(path.join(root, name)) === match[1].toLowerCase(), 'CHECKSUM_MISMATCH', `文件校验值不一致：${name}`);
+    assert(await sha256(path.join(root, name)) === match[1].toLowerCase(), 'CHECKSUM_MISMATCH', `Checksum mismatch: ${name}`);
   }
-  assert(files.every(f => f === 'checksums.sha256' || declared.has(f)), 'CHECKSUM_INCOMPLETE', '校验清单没有覆盖全部文件');
+  assert(files.every(f => f === 'checksums.sha256' || declared.has(f)), 'CHECKSUM_INCOMPLETE', 'The checksum list does not cover every file.');
 }
 export async function readJson(file) {
-  assert((await fs.stat(file)).size < 5_000_000, 'JSON_TOO_LARGE', '配置文件过大');
+  assert((await fs.stat(file)).size < 5_000_000, 'JSON_TOO_LARGE', 'Configuration file is too large.');
   try { return JSON.parse((await fs.readFile(file, 'utf8')).replace(/^\uFEFF/, '')); }
-  catch { throw new PackageError('JSON_INVALID', `JSON 无法解析：${path.basename(file)}`); }
+  catch { throw new PackageError('JSON_INVALID', `Cannot parse JSON: ${path.basename(file)}`); }
 }

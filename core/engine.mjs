@@ -111,8 +111,8 @@ export async function render(session, outputRoot, {signal, onProgress = () => {}
     const outputFile = path.join(outputDir, m.output.fileName);
     const report = {status: 'passed', appVersion: '1.0.0-alpha.1', protocolVersion: '1.0', sourceZipSha256: session.sourceHash, outputSha256: await sha256(pending), frames: Number(v.nb_read_frames), durationSeconds: Number(a.duration), width: v.width, height: v.height,
       timings: {...timings, inputCheckSeconds: session.checkSeconds, totalRenderSeconds: (Date.now() - start) / 1000}, engineProcessPeakRssBytes: peakRssBytes, memoryMeasurementScope: 'Node engine process only; browser/encoder excluded', outputBytes: (await fs.stat(pending)).size, fullDecodePassed: true, humanVisualAudioReview: 'not-performed-by-software', plan: session.plan};
-    await fs.writeFile(path.join(outputDir, '制作记录.json'), JSON.stringify(report, null, 2));
-    await fs.writeFile(path.join(outputDir, '检查报告.txt'), `技术Checks passed\n分辨率：${v.width}×${v.height}\n帧率：30\n总帧数：${v.nb_read_frames}\n音频：AAC / 48kHz / 双声道\n完整解码：通过\n生成耗时：${report.timings.totalRenderSeconds.toFixed(1)} 秒\n说明：未自动判断新闻事实、素材语义、听写准确性和听感。\n`, 'utf8');
+    await fs.writeFile(path.join(outputDir, 'production-record.json'), JSON.stringify(report, null, 2));
+    await fs.writeFile(path.join(outputDir, 'validation-report.txt'), `Technical checks passed\nResolution: ${v.width}×${v.height}\nFrame rate: 30\nFrame count: ${v.nb_read_frames}\nAudio: AAC / 48kHz / stereo\nFull decode: passed\nRender duration: ${report.timings.totalRenderSeconds.toFixed(1)} seconds\nNote: Facts, asset semantics, transcript accuracy and listening quality are not assessed automatically.\n`, 'utf8');
     cancelled(signal);
     await fs.rename(pending, outputFile);
     onProgress({stage: 'Render complete', progress: 1});
@@ -120,7 +120,7 @@ export async function render(session, outputRoot, {signal, onProgress = () => {}
   } catch (e) {
     const error = signal?.aborted ? new PackageError('CANCELLED', 'Task cancelled.') : e;
     await fs.rm(pending, {force: true}).catch(() => {});
-    await fs.writeFile(path.join(outputDir, '失败记录.json'), JSON.stringify({status: error.code === 'CANCELLED' ? 'cancelled' : 'failed', code: error.code || 'UNEXPECTED', message: error.message}, null, 2)).catch(() => {});
+    await fs.writeFile(path.join(outputDir, 'failure-record.json'), JSON.stringify({status: error.code === 'CANCELLED' ? 'cancelled' : 'failed', code: error.code || 'UNEXPECTED', message: error.message}, null, 2)).catch(() => {});
     throw error;
   } finally {clearInterval(monitor); server?.close(); await fs.rm(work, {recursive: true, force: true}).catch(() => {});}
 }

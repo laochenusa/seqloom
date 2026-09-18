@@ -4,6 +4,7 @@ import path from 'node:path';
 import {pipeline} from 'node:stream/promises';
 import sharp from 'sharp';
 import yazl from 'yazl';
+import * as fontkit from 'fontkit';
 import {APP_ROOT, ffmpeg} from '../core/runtime.mjs';
 import {exampleManifest, imageScene} from '../core/example.mjs';
 import {run, sha256} from '../core/io.mjs';
@@ -30,6 +31,8 @@ async function make(name, {portrait=false, frames=450, branded=false}={}) {
   // Windows system font is used only in local QA fixtures, not distributed with the app.
   await fs.copyFile(process.env.SEQLOOM_TEST_FONT || 'C:/Windows/Fonts/simhei.ttf',path.join(root,'fonts/subtitle.ttf'));
   const m=exampleManifest({portrait,frames,title:name});
+  const font=fontkit.openSync(path.join(root,'fonts/subtitle.ttf'));
+  m.subtitles.lineHeightPx=Math.max(m.subtitles.lineHeightPx,Math.ceil((font.ascent-font.descent)*m.subtitles.fontSizePx/font.unitsPerEm));
   const w=m.video.width,h=m.video.height;
   for(let i=1;i<=3;i++) {
     const svg=`<svg width="${w}" height="${h}" xmlns="http://www.w3.org/2000/svg"><rect width="100%" height="100%" fill="${['#16365d','#6b2445','#13594a'][i-1]}"/><rect x="80" y="80" width="${w-160}" height="${h-160}" rx="32" fill="none" stroke="#efcc7b" stroke-width="6"/><text x="${w/2}" y="${h*.4}" text-anchor="middle" fill="white" font-family="Arial" font-size="100">SCENE ${i}</text><text x="${w/2}" y="${h*.5}" text-anchor="middle" fill="#efcc7b" font-family="Arial" font-size="44">SEQLOOM / TIMING TEST</text></svg>`;
@@ -60,7 +63,8 @@ async function make(name, {portrait=false, frames=450, branded=false}={}) {
   console.log(`Fixture ready: ${name}`);
 }
 if(process.argv[1]===new URL(import.meta.url).pathname.replace(/^\/(.:)/,'$1').replaceAll('/',path.sep) || process.argv[1]?.endsWith('fixtures.mjs')) {
-  await make('precision-15s');
-  await make('shorts-42s',{portrait:true,frames:1260});
-  await make('landscape-265s',{frames:7951,branded:true});
+  const requested=new Set(process.argv.slice(2));
+  for(const [name,options] of [['precision-15s',{}],['shorts-42s',{portrait:true,frames:1260}],['landscape-265s',{frames:7951,branded:true}]]) {
+    if(!requested.size || requested.has(name)) await make(name,options);
+  }
 }

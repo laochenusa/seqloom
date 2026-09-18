@@ -65,6 +65,6 @@ Use `node scripts/verify-run.mjs shorts-42s landscape-265s` for longer coverage.
 
 ## Current limitations
 
-Read `docs/validation.md` for actual evidence. Portable packaging, a clean-machine run, full native desktop import/export coverage, maximum-size input stress testing, and final-version long-form validation require independent acceptance. Some raw backend diagnostics and output report names remain Chinese even though default UI explanations are English. Task caches currently require manual housekeeping. Protocol v1 is an alpha contract and legacy draft packages may be incompatible.
+Read `docs/validation.md` and `docs/acceptance-progress.md` for actual evidence. Portable packaging, a clean-machine run, full native desktop import/export coverage, maximum-size input stress testing, and final-version long-form validation require independent acceptance. Application-defined diagnostics and report names are English; package content and OS-supplied messages can retain their original language. Task caches currently require manual housekeeping. Protocol v1 is an alpha contract and legacy draft packages may be incompatible.
 
 No promise is made that source review alone establishes distribution readiness, factual correctness of video content, or third-party redistribution permissions.

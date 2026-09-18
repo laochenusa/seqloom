@@ -1,0 +1,76 @@
+{
+  "fixture": "shorts-42s",
+  "status": "passed",
+  "frames": 1260,
+  "width": 1080,
+  "height": 1920,
+  "durationSeconds": 42,
+  "sourceZipSha256": "0104e472a286b4565d8bf57ae5b7c38edda0925fa7e0ca3321a59132516646a8",
+  "outputSha256": "9235da5ec4325438136706ad1fea5a97194d7e2bb473bf70b0dff1d7742a720e",
+  "fullDecodePassed": true,
+  "timings": {
+    "pictureSeconds": 123.312,
+    "audioMuxSeconds": 0.598,
+    "outputCheckSeconds": 6.417,
+    "inputCheckSeconds": 3.904,
+    "totalRenderSeconds": 133.358
+  },
+  "samples": {
+    "0": {
+      "rgb": [
+        17,
+        52,
+        94
+      ],
+      "whiteCaptionPixels": 0
+    },
+    "29": {
+      "rgb": [
+        17,
+        52,
+        94
+      ],
+      "whiteCaptionPixels": 0
+    },
+    "30": {
+      "rgb": [
+        17,
+        52,
+        94
+      ],
+      "whiteCaptionPixels": 7973
+    },
+    "89": {
+      "rgb": [
+        17,
+        52,
+        94
+      ],
+      "whiteCaptionPixels": 7968
+    },
+    "90": {
+      "rgb": [
+        17,
+        52,
+        94
+      ],
+      "whiteCaptionPixels": 0
+    },
+    "1259": {
+      "rgb": [
+        17,
+        52,
+        94
+      ],
+      "whiteCaptionPixels": 0
+    }
+  },
+  "audioMarksSeconds": [
+    1.0000416666666667,
+    5.000041666666666,
+    10.000041666666666
+  ],
+  "maxAudioMarkErrorSeconds": 0.00004166666666671759,
+  "unexpectedAudioSamples": 0,
+  "preassembledOpeningClosingChecked": false
+}

@@ -17,7 +17,7 @@ function Scene({scene: s, frame, base}) {
 }
 function Video({plan, assetBase}) {
   const frame = useCurrentFrame(), {manifest: m, scenes, cues} = plan;
-  const [handle] = useState(() => delayRender('读取字幕字体'));
+  const [handle] = useState(() => delayRender('Loading caption font'));
   useEffect(() => {
     const font = new FontFace('PackageSubtitle', `url("${url(assetBase, m.subtitles.fontPath)}")`);
     font.load().then(f => {document.fonts.add(f); continueRender(handle);}).catch(e => {console.error(e);});

@@ -40,6 +40,6 @@ export function validateShape(kind, data) {
   const valid = validators[kind];
   if (!valid(data)) {
     const details = valid.errors.slice(0, 6).map(e => `${e.instancePath || '/'} ${e.message}`).join('; ');
-    throw new PackageError('SCHEMA_INVALID', `配置不符合 v1 格式：${details}`, kind);
+    throw new PackageError('SCHEMA_INVALID', `Configuration does not match the v1 schema: ${details}`, kind);
   }
 }

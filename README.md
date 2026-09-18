@@ -10,6 +10,8 @@ The package supplies one complete soundtrack and a complete timeline. Any intro/
 
 **Status: source alpha for independent acceptance review.** Start with [ACCEPTANCE.md](ACCEPTANCE.md), [package requirements](docs/package-requirements.txt), and [validation evidence](docs/validation.md). This repository does not include a signed installer or third-party runtime binaries.
 
+**Review follow-up:** [current progress and remaining gates](docs/acceptance-progress.md) · [live Windows checks](https://github.com/laochenusa/seqloom/actions).
+
 ## Run the Windows build
 
 After preparing the runtimes and running `npm run package:win`, open `dist/Seqloom-win32-x64/Seqloom.exe`. Keep the entire directory together. A complete portable build includes its runtimes; Node.js and Python are not needed on the destination machine. Packaging and clean-machine verification remain acceptance tasks, not a claim that a downloadable release is available.
