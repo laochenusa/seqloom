@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "platform": "win32",
+  "arch": "x64",
+  "electron": "40.10.6",
+  "execution": "Packaged Electron in Node mode; isolated temporary directory and system-only PATH",
+  "nativeDesktopUiTested": false,
+  "networkIsolationTested": false,
+  "cancellationPassed": true,
+  "retryPassed": true,
+  "frames": 450,
+  "fullDecodePassed": true,
+  "outputSha256": "48404caed33999a5fc8e0caaddf39a07531af8b2a970729b90a2be00eb344403",
+  "timings": {
+    "pictureSeconds": 76.716,
+    "audioMuxSeconds": 1.317,
+    "outputCheckSeconds": 4.673,
+    "inputCheckSeconds": 11.563,
+    "totalRenderSeconds": 85.956
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "repository": "laochenusa/seqloom",
+  "commit": "de7d8e5de0fb18b036307e7907ed3027ed836826",
+  "runId": 35389602056,
+  "url": "https://github.com/laochenusa/seqloom/actions/runs/35389602056",
+  "status": "completed",
+  "conclusion": "success",
+  "jobs": [
+    {"name": "contract", "conclusion": "success", "completedAt": "2026-09-18T20:07:09Z"},
+    {"name": "package-tests", "conclusion": "success", "completedAt": "2026-09-18T20:07:22Z"},
+    {"name": "portable-core", "conclusion": "success", "completedAt": "2026-09-18T20:09:06Z"}
+  ],
+  "scope": "Windows hosted runner; no native desktop or actual network-isolation claim"
+}

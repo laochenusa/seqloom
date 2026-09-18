@@ -1,0 +1,109 @@
+{
+  "fixture": "landscape-265s",
+  "status": "passed",
+  "frames": 7951,
+  "width": 1920,
+  "height": 1080,
+  "durationSeconds": 265.033,
+  "sourceZipSha256": "f775097ee13003b967453495e8824cccea97f7fe4254e7a1dc1de3821dfc0200",
+  "outputSha256": "7bf2ab54c19a841c05eecabd852468e471c122da8d7f6d9a380c76bb76575786",
+  "fullDecodePassed": true,
+  "timings": {
+    "pictureSeconds": 979.555,
+    "audioMuxSeconds": 6.265,
+    "outputCheckSeconds": 39.07,
+    "inputCheckSeconds": 11.207,
+    "totalRenderSeconds": 1026.872
+  },
+  "samples": {
+    "0": {
+      "rgb": [
+        19,
+        39,
+        66
+      ],
+      "whiteCaptionPixels": 0
+    },
+    "95": {
+      "rgb": [
+        19,
+        39,
+        66
+      ],
+      "whiteCaptionPixels": 0
+    },
+    "96": {
+      "rgb": [
+        17,
+        52,
+        94
+      ],
+      "whiteCaptionPixels": 0
+    },
+    "119": {
+      "rgb": [
+        17,
+        52,
+        94
+      ],
+      "whiteCaptionPixels": 0
+    },
+    "120": {
+      "rgb": [
+        17,
+        52,
+        94
+      ],
+      "whiteCaptionPixels": 8017
+    },
+    "179": {
+      "rgb": [
+        17,
+        52,
+        94
+      ],
+      "whiteCaptionPixels": 8022
+    },
+    "180": {
+      "rgb": [
+        17,
+        52,
+        94
+      ],
+      "whiteCaptionPixels": 0
+    },
+    "7770": {
+      "rgb": [
+        12,
+        80,
+        74
+      ],
+      "whiteCaptionPixels": 0
+    },
+    "7771": {
+      "rgb": [
+        25,
+        59,
+        43
+      ],
+      "whiteCaptionPixels": 0
+    },
+    "7950": {
+      "rgb": [
+        25,
+        59,
+        43
+      ],
+      "whiteCaptionPixels": 0
+    }
+  },
+  "audioMarksSeconds": [
+    1.0000416666666667,
+    5.000041666666666,
+    10.000041666666666
+  ],
+  "maxAudioMarkErrorSeconds": 0.00004166666666671759,
+  "unexpectedAudioSamples": 0,
+  "preassembledOpeningClosingChecked": true,
+  "colorCheckScope": "Nearest synthetic scene color; not a color-fidelity certification"
+}
