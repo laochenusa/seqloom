@@ -1,0 +1,33 @@
+{
+  "name": "seqloom",
+  "version": "1.0.0-alpha.1",
+  "private": true,
+  "description": "Local video production from validated asset packages",
+  "license": "SEE LICENSE IN LICENSE",
+  "type": "module",
+  "main": "desktop/main.cjs",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.mjs",
+    "fixtures": "node scripts/fixtures.mjs",
+    "build:composition": "node scripts/build-composition.mjs",
+    "package:win": "node scripts/package.mjs",
+    "build:requirements": "node scripts/build-requirements-en.mjs"
+  },
+  "dependencies": {
+    "@remotion/renderer": "4.0.524",
+    "remotion": "4.0.524",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "ajv": "8.17.1",
+    "fontkit": "2.0.4",
+    "yauzl": "3.2.0"
+  },
+  "devDependencies": {
+    "electron": "^40.0.0",
+    "@electron/packager": "^18.3.6",
+    "yazl": "3.3.1",
+    "sharp": "^0.34.5",
+    "@remotion/bundler": "4.0.524"
+  }
+}

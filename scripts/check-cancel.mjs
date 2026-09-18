@@ -1,0 +1,14 @@
+import fs from 'node:fs/promises';
+import path from 'node:path';
+import assert from 'node:assert/strict';
+import {APP_ROOT} from '../core/runtime.mjs';
+import {inspect,render} from '../core/engine.mjs';
+const session=await inspect(path.join(APP_ROOT,'fixtures/precision-15s.zip'),path.join(APP_ROOT,'qa/cancel-tasks'));
+const controller=new AbortController();let enteredRender=false;
+const out=path.join(APP_ROOT,'qa/cancel-outputs');
+await assert.rejects(render(session,out,{signal:controller.signal,onProgress:p=>{if(p.progress>=.02){enteredRender=true;controller.abort();}}}),e=>e.code==='CANCELLED');
+assert(enteredRender);
+const folders=await fs.readdir(out);const latest=folders.sort().at(-1);const entries=await fs.readdir(path.join(out,latest));
+assert(!entries.some(n=>n.endsWith('.mp4')));
+const report={status:'passed',cancelDuringRendering:true,noFinalOrIncompleteMp4:true,originalPackageStillExists:Boolean(await fs.stat(path.join(APP_ROOT,'fixtures/precision-15s.zip')))};
+await fs.writeFile(path.join(APP_ROOT,'qa/cancel-check.json'),JSON.stringify(report,null,2));console.log(report);

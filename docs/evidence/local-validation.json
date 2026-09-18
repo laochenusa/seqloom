@@ -1,0 +1,156 @@
+{
+  "fixture": "precision-15s",
+  "protocol": "single-final-soundtrack alpha v1",
+  "sourceZipSha256": "2095a0a19c0e14c394e54c952daac861b319ef92937e4de784fb7a0de24f83c8",
+  "outputSha256": "f7ad499a1fa210358002d52e2eeb6743435f86315ac73480cbf91220fbdda1d6",
+  "width": 1920,
+  "height": 1080,
+  "frames": 450,
+  "durationSeconds": 15,
+  "outputBytes": 604719,
+  "fullDecodePassed": true,
+  "timings": {
+    "pictureSeconds": 152.197,
+    "audioMuxSeconds": 9.013,
+    "outputCheckSeconds": 14.109,
+    "inputCheckSeconds": 39.276,
+    "totalRenderSeconds": 198.197
+  },
+  "precision": {
+    "status": "passed",
+    "testedFrames": [
+      29,
+      30,
+      89,
+      90,
+      149,
+      150,
+      157,
+      158,
+      299,
+      300,
+      307,
+      308,
+      449
+    ],
+    "samples": {
+      "29": {
+        "rgb": [
+          17,
+          52,
+          94
+        ],
+        "whiteCaptionPixels": 0
+      },
+      "30": {
+        "rgb": [
+          17,
+          52,
+          94
+        ],
+        "whiteCaptionPixels": 8017
+      },
+      "89": {
+        "rgb": [
+          17,
+          52,
+          94
+        ],
+        "whiteCaptionPixels": 8022
+      },
+      "90": {
+        "rgb": [
+          17,
+          52,
+          94
+        ],
+        "whiteCaptionPixels": 0
+      },
+      "149": {
+        "rgb": [
+          17,
+          52,
+          94
+        ],
+        "whiteCaptionPixels": 0
+      },
+      "150": {
+        "rgb": [
+          30,
+          50,
+          90
+        ],
+        "whiteCaptionPixels": 6567
+      },
+      "157": {
+        "rgb": [
+          111,
+          43,
+          68
+        ],
+        "whiteCaptionPixels": 6623
+      },
+      "158": {
+        "rgb": [
+          111,
+          43,
+          68
+        ],
+        "whiteCaptionPixels": 6626
+      },
+      "299": {
+        "rgb": [
+          111,
+          43,
+          68
+        ],
+        "whiteCaptionPixels": 0
+      },
+      "300": {
+        "rgb": [
+          97,
+          47,
+          68
+        ],
+        "whiteCaptionPixels": 0
+      },
+      "307": {
+        "rgb": [
+          12,
+          80,
+          74
+        ],
+        "whiteCaptionPixels": 0
+      },
+      "308": {
+        "rgb": [
+          12,
+          80,
+          74
+        ],
+        "whiteCaptionPixels": 0
+      },
+      "449": {
+        "rgb": [
+          12,
+          80,
+          74
+        ],
+        "whiteCaptionPixels": 0
+      }
+    },
+    "audioMarksSeconds": [
+      1.0000416666666667,
+      5.000041666666666,
+      10.000041666666666
+    ],
+    "maxAudioMarkErrorSeconds": 0.00004166666666671759,
+    "description": "Decoded final MP4: caption frame boundaries, dissolve boundary colors, three known audio markers."
+  },
+  "cancellation": {
+    "status": "passed",
+    "cancelDuringRendering": true,
+    "noFinalOrIncompleteMp4": true,
+    "originalPackageStillExists": true
+  }
+}

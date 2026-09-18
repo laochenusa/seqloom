@@ -1,0 +1,14 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data:"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Seqloom</title><link rel="stylesheet" href="style.css"></head>
+<body><link rel="stylesheet" href="compact.css"><main>
+<header><div><span class="eyebrow">LOCAL VIDEO PRODUCTION</span><h1>Seqloom <span id="version">1.0</span></h1></div><button id="requirements" class="quiet">Package Requirements ↗</button></header>
+<p class="lead">Your assets. Your timeline. One finished video.</p>
+<section id="drop" tabindex="0" aria-label="Drop a ZIP package"><div class="package-icon">▧</div><h2>Drop your ZIP package here</h2><p>Landscape or portrait · Burned-in captions · Local MP4 export</p><button id="choose" class="primary">Choose Package</button><p id="source" class="small"></p></section>
+<section id="summary" class="summary" hidden><strong id="project"></strong><div id="facts"></div></section>
+<section class="output"><div><span class="label">Output folder</span><p id="outputPath"></p></div><button id="chooseOutput" class="quiet">Change</button></section>
+<section class="status" aria-live="polite"><div class="status-heading"><strong id="stage">Ready when you are</strong><span id="elapsed"></span></div><progress id="progress" max="1" value="0"></progress><p id="detail">Import a package to check its contents before rendering.</p></section>
+<section id="errorBox" class="error" hidden><p id="errorText"></p><button id="copyError" class="quiet">Copy Error Details</button></section>
+<footer><span>Locked timing · No AI required · Originals preserved</span><div><button id="cancel" class="quiet" hidden>Cancel</button><button id="play" class="quiet" hidden>Play Video</button><button id="open" class="quiet" hidden>Open Output Folder</button><button id="render" class="primary" disabled>Render Video</button></div></footer>
+</main>
+<dialog id="requirementsDialog"><div class="dialog-heading"><div><span class="eyebrow">FOR YOUR PACKAGE CREATOR</span><h2>Package Requirements · v1.0</h2></div><button id="closeRequirements" class="quiet">Close</button></div><p>Includes examples and schemas matching this version of Seqloom.</p><textarea id="requirementsText" readonly aria-label="Complete package requirements"></textarea><div class="dialog-bottom"><span id="copyStatus" aria-live="polite"></span><button id="copyRequirements" class="primary">Copy Requirements</button></div></dialog>
+<script src="errors.js"></script><script src="ui.js"></script></body></html>

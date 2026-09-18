@@ -1,0 +1,245 @@
+{
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "scenes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1000,
+      "items": {
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "startFrame": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "endFrame": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "fit": {
+                "enum": [
+                  "contain",
+                  "cover"
+                ]
+              },
+              "backgroundColor": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "transitionIn": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "cut"
+                      },
+                      "durationFrames": {
+                        "const": 0
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "durationFrames"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "dissolve"
+                      },
+                      "durationFrames": {
+                        "type": "integer",
+                        "minimum": 6,
+                        "maximum": 10
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "durationFrames"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "type": {
+                "const": "image"
+              },
+              "motion": {
+                "type": "object",
+                "properties": {
+                  "scaleStart": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4
+                  },
+                  "scaleEnd": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 4
+                  },
+                  "offsetStartPx": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "offsetEndPx": {
+                    "type": "array",
+                    "items": {
+                      "type": "number"
+                    },
+                    "minItems": 2,
+                    "maxItems": 2
+                  },
+                  "easing": {
+                    "const": "linear"
+                  }
+                },
+                "required": [
+                  "scaleStart",
+                  "scaleEnd",
+                  "offsetStartPx",
+                  "offsetEndPx",
+                  "easing"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "id",
+              "path",
+              "startFrame",
+              "endFrame",
+              "fit",
+              "backgroundColor",
+              "transitionIn",
+              "type",
+              "motion"
+            ],
+            "additionalProperties": false
+          },
+          {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "path": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 500
+              },
+              "startFrame": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "endFrame": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "fit": {
+                "enum": [
+                  "contain",
+                  "cover"
+                ]
+              },
+              "backgroundColor": {
+                "type": "string",
+                "pattern": "^#[0-9a-fA-F]{6}$"
+              },
+              "transitionIn": {
+                "oneOf": [
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "cut"
+                      },
+                      "durationFrames": {
+                        "const": 0
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "durationFrames"
+                    ],
+                    "additionalProperties": false
+                  },
+                  {
+                    "type": "object",
+                    "properties": {
+                      "type": {
+                        "const": "dissolve"
+                      },
+                      "durationFrames": {
+                        "type": "integer",
+                        "minimum": 6,
+                        "maximum": 10
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "durationFrames"
+                    ],
+                    "additionalProperties": false
+                  }
+                ]
+              },
+              "type": {
+                "const": "video"
+              },
+              "sourceStartFrame": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "sourceEndFrame": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "id",
+              "path",
+              "startFrame",
+              "endFrame",
+              "fit",
+              "backgroundColor",
+              "transitionIn",
+              "type",
+              "sourceStartFrame",
+              "sourceEndFrame"
+            ],
+            "additionalProperties": false
+          }
+        ]
+      }
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "scenes"
+  ],
+  "additionalProperties": false
+}

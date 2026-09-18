@@ -1,0 +1,57 @@
+Seqloom No-Resale License 1.0
+
+Copyright (c) 2026 Seqloom contributors.
+
+1. Permission
+
+Subject to the conditions below, the copyright holders grant you a worldwide,
+non-exclusive, royalty-free permission to use, copy, study, modify, and distribute
+this software and its documentation (the Software). Personal use, internal
+business use, and use to produce commercial or monetized content are permitted.
+
+2. No sale of the Software
+
+Without separate written permission from the relevant copyright holders, you
+may not sell, sublicense for a fee, or charge for access to a distributed copy of
+the Software, whether unchanged or modified. This restriction includes paid
+installers, rebranded editions, and paid software bundles containing the Software.
+Renaming, wrapping, or modifying the Software does not remove this restriction.
+Distribution of the Software without charge is permitted under this license.
+
+For clarity, you may sell videos and other output you create using the Software,
+including client work, and earn advertising or subscription revenue from that
+content. This license does not impose a license on your output or your input
+assets. Separately offered services that do not sell or charge for a distributed
+copy of the Software are not prohibited by section 2.
+
+3. Notices and modifications
+
+Include this license and the applicable copyright notices with every copy or
+substantial portion you distribute. Identify your modifications and preserve
+these conditions for the original Software and modifications to it. Do not
+represent a modified edition as an official Seqloom release.
+
+4. Third-party components
+
+This license covers only code and documentation whose copyright holders license
+them under these terms. Dependencies, runtimes, fonts, and supplied media retain
+their own licenses. This license does not grant rights to those components or
+to trademarks. Separate resale permission for Seqloom does not replace required
+third-party permissions.
+
+5. Termination
+
+Your permission terminates automatically if you violate these conditions.
+Termination does not limit any rights or remedies of the copyright holders.
+
+6. No warranty; limitation of liability
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT
+SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR ITS USE.
+
+This is a source-available license with a resale restriction, not a claim of
+compliance with the Open Source Definition. Requests for separate paid
+distribution permission should be directed to the repository owner.

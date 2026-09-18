@@ -1,0 +1,66 @@
+# Seqloom · Package Requirements v1.0
+
+Create a complete ZIP that Seqloom can turn into one MP4 with burned-in captions. The application follows explicit data; it does not interpret production prompts, align speech, rewrite text, fetch assets, or call AI.
+
+## Required layout
+Place manifest.json, scene-timing.json, captions.json, checksums.sha256 and all referenced assets/, audio/, fonts/, brand/ files directly at the ZIP root. Do not add a wrapper folder. README is optional and is never executed or interpreted as rendering instructions.
+
+Use package-relative paths with forward slashes. No external resources, absolute paths, parent traversal, encrypted archives, symbolic links, executable scripts or Windows reserved names. Paths must be shorter than 220 characters. All resources must exist; examples are not substitutes for real files.
+
+## Supported inputs
+- 1920 x 1080 landscape or 1080 x 1920 portrait, 30fps; maximum 3,600 seconds.
+- PNG/JPEG still images, at most 40 million pixels per image.
+- MP4 / H.264 video, constant 30fps. Embedded video audio is always ignored.
+- One final soundtrack: PCM WAV, 48kHz, stereo, covering the entire video exactly.
+- Captions: one supplied TTF or OTF font with every required glyph. TTC collections are not supported.
+- ZIP smaller than 2GB, extracted total at most 8GB, each file at most 2GB, at most 10,000 entries.
+
+## Locked timeline
+Use absolute integer frames from the beginning of the final video. Intervals are [startFrame,endFrame): start included, end excluded. Convert seconds only once with floor(seconds*30+0.5).
+
+Scenes must continuously cover frame 0 through video.durationFrames, with no gaps or overlaps. Scene IDs and caption IDs must each be unique. The application never moves boundaries to repair a package.
+
+## Images and video
+Images use contain or cover, centered in the frame. Prefer contain for data/text graphics. motion scales are relative to the fitted image. offsetStartPx/offsetEndPx are [x,y] offsets from the frame center, positive right/down. Interpolate linearly from the first to the last scene frame. A one-frame scene uses its starting values. The creator must ensure important content remains visible throughout the movement.
+
+Video scenes use sourceStartFrame/sourceEndFrame. The source interval must exactly equal the scene's timeline length and exist in the source file. No speed changes, looping or automatic freeze extension. Do not include motion in a video scene.
+
+Complex effects such as individual words lighting up, animated arrows or changing numbers must be pre-rendered upstream as video. A flat image is not a layered animation source.
+
+## Transitions
+Only cut (0 frames) and dissolve (6-10 frames) are supported. The first scene must use cut. A transition cannot exceed the current scene length.
+
+A dissolve occupies the incoming scene's existing first N frames. The previous scene's last visual frame is frozen underneath. Incoming opacity at local frame k is (k+1)/N. No timeline duration changes, audio crossfades, caption fades or watermark fades are implied.
+
+## Audio
+audio.path points to one complete, ready-to-use soundtrack, starting at frame 0. It must contain exactly video.durationFrames * 1600 samples per channel. Include all narration, music, intro/outro sounds, joins, fades and intentional silence upstream.
+
+Seqloom encodes this soundtrack to AAC without mixing, gain changes, delays, trimming or padding. Shorter or longer audio is rejected. Video clip audio is always muted, even when present in the source file. Per-scene audio settings are unsupported.
+
+## Captions
+captions.json must contain the complete, verified transcript aligned to the final audio. Do not estimate timing by character count or reuse scene summaries as a transcript.
+
+Each cue contains id, startFrame, endFrame and text. Use explicit newline characters for at most two non-empty lines. No overlap or out-of-range times. Intentional gaps between cues are allowed. Include captions for an opening or closing segment only where intended.
+
+The caption box is an output-pixel rectangle measured from the top-left. Text is centered horizontally and vertically. Seqloom does not auto-wrap, delete text or shrink fonts to hide overflow. Supply an adequate line height, including the font's actual metrics, and enough box space for outlines. Reserve this space in the underlying artwork.
+
+For portrait input, a starting layout is x=80, y=1380, width=800, height=180, but check it against your actual artwork and target platform. Platform overlays are not guaranteed to remain unchanged.
+
+## Branding
+Any opening or closing segment must already be part of the complete timeline as ordinary image/video scenes. Pre-render its visual joins into supplied video where needed, and include its sound in the final soundtrack. Use cut at pre-rendered joins to avoid applying an effect twice. There are no intro/outro role fields, scene-reference settings or separate import controls in v1. Seqloom does not insert or assemble them. Separate intro/outro import and assembly are deferred to a later version.
+
+Disabled watermark: {"enabled":false}.
+Enabled watermark: enabled,path,startFrame,endFrame,x,y,widthPx,opacity. It must be a PNG, preserve aspect ratio and stay within the frame. Do not add a second logo if the artwork already includes one.
+
+Layer order: scene and transition, watermark, captions.
+
+## Output and checksums
+output.fileName must be a single .mp4 file name without a directory. burnSubtitles=true. encodingPreset=h264-aac-1080p-v1: H.264/yuv420p/CRF18/fast, AAC192kbps/48kHz/stereo/faststart.
+
+checksums.sha256 uses one line per file: 64 hexadecimal SHA256 characters, two spaces, relative path. Include every file except the checksum list itself. Regenerate hashes whenever files change.
+
+## Creator responsibilities
+Verify the facts, visuals, transcript, speech alignment, caption legibility and listening quality before delivery. Technical validation does not establish semantic or editorial correctness. List any unfinished checks; never fabricate a passing result.
+
+## Examples and machine schemas
+The following examples describe structure only. Supply the actual media and complete captions. The schemas below are generated from the same definitions used by this application. Unknown fields are rejected. Semantic timing, media and layout checks above apply in addition to the schemas.

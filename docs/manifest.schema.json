@@ -1,0 +1,265 @@
+{
+  "type": "object",
+  "properties": {
+    "schemaVersion": {
+      "const": "1.0"
+    },
+    "projectId": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "video": {
+      "type": "object",
+      "properties": {
+        "width": {
+          "enum": [
+            1080,
+            1920
+          ]
+        },
+        "height": {
+          "enum": [
+            1080,
+            1920
+          ]
+        },
+        "fps": {
+          "const": 30
+        },
+        "durationFrames": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 108000
+        }
+      },
+      "required": [
+        "width",
+        "height",
+        "fps",
+        "durationFrames"
+      ],
+      "additionalProperties": false
+    },
+    "timelinePath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "captionsPath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "audio": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        }
+      },
+      "required": [
+        "path"
+      ],
+      "additionalProperties": false
+    },
+    "subtitles": {
+      "type": "object",
+      "properties": {
+        "fontPath": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "fontSizePx": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 200
+        },
+        "color": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "outlineColor": {
+          "type": "string",
+          "pattern": "^#[0-9a-fA-F]{6}$"
+        },
+        "outlineWidthPx": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 12
+        },
+        "lineHeightPx": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "box": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "y": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "width": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "height": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "required": [
+            "x",
+            "y",
+            "width",
+            "height"
+          ],
+          "additionalProperties": false
+        },
+        "horizontalAlign": {
+          "const": "center"
+        },
+        "verticalAlign": {
+          "const": "center"
+        },
+        "maxLines": {
+          "const": 2
+        }
+      },
+      "required": [
+        "fontPath",
+        "fontSizePx",
+        "color",
+        "outlineColor",
+        "outlineWidthPx",
+        "lineHeightPx",
+        "box",
+        "horizontalAlign",
+        "verticalAlign",
+        "maxLines"
+      ],
+      "additionalProperties": false
+    },
+    "branding": {
+      "type": "object",
+      "properties": {
+        "watermark": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "const": false
+                }
+              },
+              "required": [
+                "enabled"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "const": true
+                },
+                "path": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 500
+                },
+                "startFrame": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "endFrame": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "x": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "y": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "widthPx": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "opacity": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "enabled",
+                "path",
+                "startFrame",
+                "endFrame",
+                "x",
+                "y",
+                "widthPx",
+                "opacity"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "watermark"
+      ],
+      "additionalProperties": false
+    },
+    "output": {
+      "type": "object",
+      "properties": {
+        "fileName": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500
+        },
+        "burnSubtitles": {
+          "const": true
+        },
+        "encodingPreset": {
+          "const": "h264-aac-1080p-v1"
+        }
+      },
+      "required": [
+        "fileName",
+        "burnSubtitles",
+        "encodingPreset"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schemaVersion",
+    "projectId",
+    "title",
+    "video",
+    "timelinePath",
+    "captionsPath",
+    "audio",
+    "subtitles",
+    "branding",
+    "output"
+  ],
+  "additionalProperties": false
+}
